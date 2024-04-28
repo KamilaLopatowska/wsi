@@ -2,8 +2,8 @@ from tabulate import tabulate
 
 
 #ilość produktów potrzebnych na wskazany dzień
-ilosc = int(input("Podaj ilość gier, które potrzebujesz:"))
-dzien = input("Podaj nr tygodnia (1-7), na który je potrzebujesz: ")
+ilosc = int(input("Podaj ilość gier, które potrzebujesz: "))
+dzien = input("Podaj ile jest dni na realizację zamówienia: ")
 
 #zależność w ilości między produktami różnych poziomów
 
