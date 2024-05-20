@@ -19,11 +19,9 @@ def extract():
         response = requests.get(url=url)
         if response.status_code == requests.codes['ok']:
             page_dom = BeautifulSoup(response.text, "html.parser")
-            try:
-                opinions_count = utils.extract(page_dom, "a.product-review__link > span")
-            except AttributeError:
-                opinions_count = 0
+            opinions_count = utils.extract(page_dom, "a.product-review__link > span")
             if opinions_count:
+                url = f"https://www.ceneo.pl/{product_id}/opinie-1"
                 all_opinions = []
                 while (url):
                     response = requests.get(url)
@@ -39,9 +37,11 @@ def extract():
                         url = "https://www.ceneo.pl"+utils.extract(page_dom ,"a.pagination__next", "href")
                     except TypeError:
                         url = None
-                if not os.path.exists("opinions"):
-                    os.mkdir("opinions")
-                with open(f"opinions/{product_id}.json", "w", encoding="UTF-8") as jf:
+                if not os.path.exists("app/data"):
+                    os.mkdir("app/data")
+                if not os.path.exists("app/data/opinions"):
+                    os.mkdir("app/data/opinions")
+                with open(f"app/data/opinions/{product_id}.json", "w", encoding="UTF-8") as jf:
                     json.dump(all_opinions, jf, indent=4, ensure_ascii=False)
                 return redirect(url_for('product', product_id=product_id))
             error = "Brak opinii"
